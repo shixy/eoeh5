@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="css/Jingle.min.css">
     <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/pygments.css">
 </head>
 <body>
     <div id="aside_container">
@@ -38,7 +39,7 @@
                 </nav>
                 <h1 class="title"></h1>
                 <nav class="right">
-                    <a href="#user_section" data-target="section" data-icon="user"></a>
+                    <a href="#login_section" data-target="section" data-icon="user" style="padding-left: 15px;"></a>
                 </nav>
             </header>
             <nav class="header-secondary" style="display: block">
@@ -69,7 +70,7 @@
             </script>
             <script type="text/html" id="tpl_article_list_li">
                 {each $data}
-                <li class="grid">
+                <li class="grid" data-url="{$value.detail_url}">
                     {if $value.name}
                     <div style="margin-right:4px;">
                         <img src="{$value.head_image_url}" width="48" height="48">

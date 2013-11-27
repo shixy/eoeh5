@@ -4,11 +4,12 @@ window.EoeAPI = (function(){
     this.blogURL = _baseURL + '/blog?k=lists';
     this.newsURL = _baseURL + '/news?k=lists';
     this.wikiURL = _baseURL + '/wiki?k=lists';
+    this.loginURL = '';
+    this.loginURLQR = '';
     this.get = function(url,success,error){
             //判断当前是手机端(phonegap)还是浏览器端，手机端通过phonegap的白名单进行跨域，浏览器端采用nodejs进行跨域转发
             if(location.protocol == 'http:'){
                 url = '/proxy?url='+url;
-                param = {};
             }
             var options = {
                 url : url,

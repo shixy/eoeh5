@@ -112,6 +112,12 @@ App.page('index',function(){
                 $this.data('url',data.response.more_url);
             });
         });
+        $('#index_article').on('tap','.list-container li',function(){
+           var url = $(this).data('url');
+            if(!url)return;
+            App.page('detail').url = url;
+            J.Router.turnTo('#detail_section');
+        });
         //init
         this.refresh('社区精选',EoeAPI.topURL);
     };
@@ -177,3 +183,23 @@ App.page('index',function(){
         });
     }
 });
+App.page('detail',function(){
+    var $container,$article;
+    this.init = function(){
+        $container = $('#detail_article  div.scrollWrapper');
+        $article = $('#detail_article');
+    }
+    this.load = function(){
+        if(!this.url){
+            console.error('没有获取数据url');
+        }
+        $container.empty();
+        J.showMask();
+        EoeAPI.get(this.url,function(data){
+            $container.html(data.response.content);
+            J.Scroll($article);
+            J.hideMask();
+        });
+    }
+
+})
