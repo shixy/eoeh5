@@ -1,0 +1,43 @@
+article{
+    background-color: #fff;
+    color: #666;
+}
+.list li{
+    font-size: .9em;
+}
+.list li strong{
+    font-size: 1.1em;
+}
+.list-container{
+    height: 100%;
+    position: relative;
+}
+.header-secondary a{
+    min-width: 100px;
+    -webkit-box-flex:1;
+    display: block;
+    height: 30px;
+}
+.header-secondary a.active{
+    border-bottom: 6px solid #47B1FA;
+    color: #2489ce;
+}
+.user-box{
+    -webkit-box-flex:1;
+    box-flex:1;
+    border-radius: 3px;
+    border: 1px solid #eee;
+    text-align: center;
+    padding:20px;margin:10px;
+}
+.user-box p{
+    font-size: 1.1em;
+    color:#2C3E50;
+    font-weight: 600;
+    padding: 5px 0;
+}
+.ellipsis{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

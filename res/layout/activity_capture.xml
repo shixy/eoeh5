@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    
+       <SurfaceView
+           android:id="@+id/preview_view"
+           android:layout_width="fill_parent"
+           android:layout_height="fill_parent"
+           android:layout_gravity="center" />
+
+       <com.google.zxing.client.android.ViewfinderView
+           android:id="@+id/viewfinder_view"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+
+       <RelativeLayout
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:layout_alignParentTop="true"
+           android:background="@drawable/barcode_bg" >
+
+           <Button
+               android:id="@+id/button_back"
+               android:layout_width="75.0dip"
+               android:layout_height="wrap_content"
+               android:layout_centerVertical="true"
+               android:layout_marginLeft="2dip"
+               android:text="@string/scan_back"
+               android:background="@drawable/barcode_back_btn"
+               android:textColor="@android:color/white" />
+
+           <TextView
+               android:id="@+id/textview_title"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignBaseline="@+id/button_back"
+               android:layout_alignBottom="@+id/button_back"
+               android:layout_centerHorizontal="true"
+               android:gravity="center_vertical"
+               android:text="@string/scan_title"
+               android:textColor="@android:color/white"
+               android:textSize="18sp" />
+       </RelativeLayout>
+
+</RelativeLayout>
