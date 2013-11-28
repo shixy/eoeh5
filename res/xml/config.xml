@@ -98,6 +98,9 @@
     <feature name="BarcodeScanner">
       <param name="android-package" value="com.google.zxing.client.android.plugin.BarcodeScanner"/>
     </feature>
+    <feature name="Sign">
+        <param name="android-package" value="com.jingle.eoe.sign.Sign"/>
+    </feature>
     <plugins>
     </plugins>
 </widget>

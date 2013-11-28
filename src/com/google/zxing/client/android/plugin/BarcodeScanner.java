@@ -28,10 +28,6 @@ public class BarcodeScanner extends CordovaPlugin {
     private static final String CANCELLED = "cancelled";
     private static final String FORMAT = "format";
     private static final String TEXT = "text";
-    private static final String MODE = "mode";
-    private static final String All_MODE = "all";//所有支持的码
-    private static final String ONE_MODE = "one";//一维码
-    private static final String TWO_MODE = "qr";//二维码
     
     private CallbackContext cbContext;
 

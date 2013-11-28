@@ -1,41 +1,41 @@
 <section id="user_section">
     <header>
         <nav class="left">
-            <a href="#" data-icon="undo" data-target="back">返回</a>
+            <a href="#index_section" data-icon="undo" data-target="section">返回</a>
         </nav>
         <h1 class="title">个人中心</h1>
     </header>
     <article class="active" id="user_article" style="padding: 10px;">
         <div style="text-align: center;margin: 10px;" >
-            <img src="images/ic_launcher.png" style="border-radius: 36px;">
-            <p style="margin:10px 0;">XXXX</p>
+            <img src="images/ic_launcher.png" id="user_icon" style="border-radius: 36px;">
+            <p style="margin:10px 0;" id="txt_username"></p>
         </div>
         <div class="grid">
             <div class="user-box">
                 <strong>E币</strong>
-                <p>0</p>
+                <p id="user_eoe_m">0</p>
             </div>
             <div class="user-box">
                 <strong>E望</strong>
-                <p>0</p>
+                <p id="user_eoe_p">0</p>
             </div>
         </div>
         <div class="grid">
             <div class="user-box">
-                <a href="#collect_section" data-target="section" style="color: #666">
+                <a href="#favo_section" data-target="section" style="color: #666">
                     <strong>博客收藏</strong>
-                    <p>1</p>
+                    <p id="num_blog_favo">1</p>
                 </a>
             </div>
             <div class="user-box">
-                <a href="#collect_section" data-target="section" style="color: #666">
+                <a href="#favo_section" data-target="section" style="color: #666">
                     <strong>资讯收藏</strong>
-                    <p>2</p>
+                    <p id="num_news_favo">0</p>
                 </a>
             </div>
         </div>
         <div style="text-align: center;margin: 20px;">
-            <button class="block alizarin">退出登录</button>
+            <button class="block alizarin" id="btn_logout">退出登录</button>
         </div>
 
     </article>

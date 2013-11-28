@@ -12,15 +12,25 @@ article{
     height: 100%;
     position: relative;
 }
+.header-secondary{
+    background-color: #fff;
+    display: block;
+    border-bottom: 1px solid #c2bfbf;
+}
 .header-secondary a{
     min-width: 100px;
     -webkit-box-flex:1;
     display: block;
+    color: #666;
     height: 30px;
 }
 .header-secondary a.active{
     border-bottom: 6px solid #47B1FA;
     color: #2489ce;
+}
+.header-secondary i.icon{
+    color: #666;
+    position: absolute;right:0;top:0;opacity:.2;
 }
 .user-box{
     -webkit-box-flex:1;

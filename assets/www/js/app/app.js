@@ -82,6 +82,11 @@ App.page('index',function(){
             J.Menu.hide();
             _this.refresh($(this).text(),url);
         });
+        $('#btn_show_user').on('tap',function(){
+            var key = localStorage.getItem('authKey');
+            var target = key ? '#user_section' : '#login_section';
+            J.Router.turnTo(target);
+        });
         //初始化导航栏iScroll
         navScroll = J.Scroll($navContainer,{vScroll:false,hScroll:true,hScrollbar: false});
         //初始化页面滑动slider
@@ -116,6 +121,7 @@ App.page('index',function(){
            var url = $(this).data('url');
             if(!url)return;
             App.page('detail').url = url;
+            App.page('detail').title = $(this).closest('ul.list').data('name');
             J.Router.turnTo('#detail_section');
         });
         //init
@@ -126,7 +132,10 @@ App.page('index',function(){
         J.showMask();
         //先销毁掉页面中的iscroll
         $(LIST_SELECTOR).each(function(){
-            J.Scroll(this).destroy();
+            if($(this).data('_jrefresh_')){
+                J.Refresh(this).destroy();
+            }
+
         });
         EoeAPI.get(url,function(data){
             var categorys = data.response.categorys;
@@ -149,57 +158,165 @@ App.page('index',function(){
             J.tmpl($nav,'tpl_category',list);
             J.tmpl('#index_article>div','tpl_article_list',list);
 
+            //刷新slider
+            slider.refresh();
+
             //动态设置最小宽度，否则iScroll横向滚动无法运行
             $nav.css('minWidth',categorys.length*100);
             navScroll = J.Scroll($navContainer);
-            if(navScroll.scrollerW > navScroll.wrapperW){
+            if(navScroll.scroller.scrollerW > navScroll.scroller.wrapperW){
                 $scrollArrow.show();
             }else{
                 $scrollArrow.hide();
             }
-            //刷新slider
-            slider.refresh();
-            //刷新默认显示界面的scroller
-            //J.Scroll($(LIST_SELECTOR).eq(0));
-            J.hideMask();
-
             $(LIST_SELECTOR).each(function(){
-                J.Refresh({
-                    selector : this,
-                    type : 'pullDown',
-                    pullText : '你敢往下拉么...',
-                    releaseText : '松手吧，骚年*^_^* ',
-                    callback : function(){
-                        var scroller = this;
-                        var $wrapper = $(scroller.wrapper);
-                        EoeAPI.get($wrapper.data('url'),function(data){
-                            J.tmpl($wrapper.find('ul'),'tpl_article_list_li',data.response.items);
-                            scroller.refresh();
-                            J.showToast('更新成功','success');
-                        });
-                    }
-                });
+                _initPullRefresh(this);
             });
+            //刷新默认显示界面的scroller
+            J.Scroll($(LIST_SELECTOR).eq(0));
+            J.hideMask();
+        });
+    }
+    var _initPullRefresh = function(selector){
+        J.Refresh({
+            selector : selector,
+            type : 'pullDown',
+            pullText : '你敢往下拉么...',
+            releaseText : '松手吧，骚年*^_^* ',
+            callback : function(){
+                var scroller = this;
+                var $wrapper = $(scroller.wrapper);
+                EoeAPI.get($wrapper.data('url'),function(data){
+                    J.tmpl($wrapper.find('ul'),'tpl_article_list_li',data.response.items);
+                    scroller.refresh();
+                    J.showToast('更新成功','success');
+                });
+            }
         });
     }
 });
 App.page('detail',function(){
-    var $container,$article;
+    var $container;
     this.init = function(){
         $container = $('#detail_article  div.scrollWrapper');
-        $article = $('#detail_article');
     }
     this.load = function(){
         if(!this.url){
             console.error('没有获取数据url');
         }
         $container.empty();
+        $('#detail_section header .title').text(this.title);
         J.showMask();
         EoeAPI.get(this.url,function(data){
             $container.html(data.response.content);
-            J.Scroll($article);
+            J.Scroll('#detail_article');
             J.hideMask();
         });
     }
+});
+App.page('login',function(){
+    this.callback;
+    this.init = function(){
+        $('#btn_login').tap(_login);
+        $('#btn_qr_login').tap(_qr_login);
+    }
+    var _login = function(){
+        var username = $('#username').val();
+        var pwd = $('#password').val();
+        if(username == '' || pwd == ''){
+            J.alert('提示','请填写完整的信息！');
+        }else{
+            J.showMask('登录中...');
+            EoeAPI.login(username,pwd,function(data){
+                J.hideMask();
+                var key = data.response.key;
+                if(key){
+                    localStorage.setItem('authKey',key);
+                    if(this.callback){//处理未登录时需要登录处理的后续操作
+                        this.callback();
+                    }else{
+                        J.Router.turnTo('#user_section');
+                    }
 
-})
+                }else{
+                    $('#password').val('');
+                    J.showToast(data.response.msg,'error');
+                }
+            })
+        }
+    }
+    var _qr_login = function(){
+        window.plugins.barcodeScanner.scan('',function(result){
+            var key = result.text;
+            if(key.indexOf(':') == -1){
+                J.showToast('二维码不正确，无法登录','error');
+                return;
+            }
+            J.showMask('正在登录...');
+            EoeAPI.getUserInfo(key,function(data){
+                J.hideMask();
+                if(data.response.isErr == 1){
+                    J.showToast(data.response.msg,'error');
+                }else{
+                    App.page('user').userInfo = data;
+                    App.authKey = key;
+                    if(this.callback){//处理未登录时需要登录处理的后续操作
+                        this.callback();
+                    }else{
+                        J.Router.turnTo('#user_section');
+                    }
+                }
+            });
+        })
+    }
+});
+App.page('user',function(){
+    var _this = this;
+    this.userInfo = null;
+    this.init = function(){
+        var _this = this;
+//        $('#num_blog_favo,#num_news_favo').on('tap',function(){
+//            J.Router.turnTo('#favo_section');
+//        });
+        $('#btn_logout').on('tap',function(){
+            localStorage.removeItem('authKey');
+            _this.userInfo = null;
+            J.Router.turnTo('#index_section');
+        });
+    }
+    this.load = function(){
+        if(this.userInfo){
+            _render(this.userInfo);
+        }else{
+            _update();
+        }
+    }
+    var _update = function(){
+        var key = localStorage.getItem('authKey');
+        EoeAPI.getUserInfo(key,_render);
+    }
+    var _render = function(data){
+        _this.userInfo = data;
+        data = data.response;
+        $('#user_icon').attr('src',data.info.head_image_url);
+        $('#txt_username').text(data.info.name);
+        $('#user_eoe_m').text(data.info.eoe_m);
+        $('#user_eoe_p').text(data.info.eoe_p);
+        $('#num_blog_favo').text(data.favorite[0].lists.length);
+        $('#num_news_favo').text(data.favorite[1].lists.length);
+    }
+});
+App.page('favo',function(){
+    this.init = function(){
+        $('#favo_section .list').on('tap','li',function(){
+            App.page('detail').url = $(this).data('url');
+            App.page('detail').title = $(this).closest('ul.list').data('name');
+            J.Router.turnTo('#detail_section');
+        });
+    }
+    this.load = function(){
+        var favo_data = App.page('user').userInfo.response.favorite;
+        J.tmpl('#favo_blog_article .list','tpl_favo',favo_data[0].lists);
+        J.tmpl('#favo_news_article .list','tpl_favo',favo_data[1].lists);
+    }
+});

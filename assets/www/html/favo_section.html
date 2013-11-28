@@ -1,0 +1,34 @@
+<section id="favo_section">
+    <header>
+        <nav class="left">
+            <a href="#" data-icon="undo" data-target="back">返回</a>
+        </nav>
+        <h1 class="title">收藏</h1>
+    </header>
+    <nav class="header-secondary">
+        <a href="#favo_blog_article" data-target="article" data-index=0 class="active">博客收藏</a>
+        <a href="#favo_news_article" data-target="article" data-index=1>资讯收藏</a>
+    </nav>
+    <article class="active" data-scroll="true" id="favo_blog_article">
+        <div class="scrollWrapper">
+            <ul class="list" data-name="博客收藏">
+            </ul>
+        </div>
+        </div>
+    </article>
+    <article data-scroll="true" id="favo_news_article">
+        <div class="scrollWrapper">
+            <ul class="list" data-name="资讯收藏">
+            </ul>
+        </div>
+        </div>
+    </article>
+    <script type="text/html" id="tpl_favo">
+        {each $data}
+        <li data-icon="next" data-selected="selected" data-url="{$value.url}">
+            <strong>{$value.title}</strong>
+            <p>{$value.short_content}</p>
+        </li>
+        {/each}
+    </script>
+</section>

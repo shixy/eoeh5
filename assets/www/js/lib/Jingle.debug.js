@@ -1863,6 +1863,7 @@ Jingle.Cache = (function(J,$){
         var _excuteScroll = function(opts){
             return J.Scroll(opts.selector,{
                     topOffset:isPullDown?topOffset:0,
+                useTransition: false,
                     bounce : true,
                     onScrollMove : function(){
                         if (this.y > opts.minPullHeight && isPullDown && !iconEl.hasClass(opts.onReleaseIcon)) {
@@ -1916,7 +1917,7 @@ Jingle.Cache = (function(J,$){
      */
     J.Refresh = function(selector,type,callback){
         var el,jRefreshId;
-        if(typeof selector === 'object'){
+        if(selector.selector){
             el = $(selector.selector)
         }else{
             el = $(selector);
