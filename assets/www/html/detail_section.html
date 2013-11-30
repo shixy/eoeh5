@@ -6,13 +6,14 @@
         <h1 class="title" style="left:80px;right:80px;width: auto;overflow: hidden;text-overflow: ellipsis;"></h1>
     </header>
     <footer>
-        <a  href="#" data-icon="thumbs-up" class="active">太棒了</a>
-        <a  href="#" data-icon="thumbs-up-2">一般般</a>
-        <a  href="#" data-icon="star-2">收藏</a>
-        <a  href="#" data-icon="bubbles">评论</a>
+        <a  href="#" id="btn_userlike_good" data-save="good-group" data-icon="thumbs-up">太棒了</a>
+        <a  href="#" id="btn_userlike_bad" data-save="bad-group" data-icon="thumbs-up-2">一般般</a>
+        <a  href="#" id="btn_user_favo" data-save="favo-group"data-icon="star-2">收藏</a>
+        <a  href="#" id="btn_user_comment" data-icon="bubbles">评论(<span id="comment_num">0</span>)</a>
     </footer>
     <article class="active" id="detail_article" data-scroll="true" >
-        <div class="scrollWrapper" style="padding: 10px 10px 30px 10px;">
-        </div>
+        <iframe src="html/detail_frame.html" id="detail_iframe" width="100%" height="100%" frameborder="0"></iframe>
+        <!--<div class="scrollWrapper" style="padding: 10px 10px 30px 10px;">-->
+        <!--</div>-->
     </article>
 </section>

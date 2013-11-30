@@ -1,0 +1,43 @@
+<section id="comment_section">
+    <header>
+        <nav class="left">
+            <a href="#" data-icon="undo" data-target="back">返回</a>
+        </nav>
+        <h1 class="title">评论</h1>
+    </header>
+    <footer>
+        <div style="display: none;width:100%;" id="comment_submit_container">
+            <div class="one-part grid">
+                <div style="-webkit-box-flex:1;padding-top: 6px;padding-left: 2px;">
+                    <input type="text" id="input_comment" placeholder="请填写评论">
+                </div>
+                <button class="button belize-hole" style="margin:6px 5px" data-icon="checkmark" id="btn_submit_comment">确定</button>
+            </div>
+        </div>
+        <div style="display: block;padding: 6px 5px 0 5px;" class="one-part" id="btn_comment_login">
+            <button data-icon="lock" class="block" >登录才能评论哦</button>
+        </div>
+    </footer>
+    <article class="active" data-scroll="true" id="comment_article">
+        <div class="scrollWrapper">
+            <ul class="list">
+            </ul>
+            <button class="block"style="background-color:#eee;color:#666 !important;display: none;" data-url="{$value.more_url}">点击加载更多</button>
+        </div>
+        </div>
+    </article>
+    <script type="text/html" id="tpl_comment">
+        {each $data}
+        <li class="grid">
+            <div class="tag" style="background:none;top:15px;color:#666;">{dateFormat($value.time+'000')}</div>
+            <div style="margin-right:4px;">
+                <img src="{$value.head_image_url}" width="48" height="48">
+            </div>
+            <div class="one-part">
+                <p style="padding:0 0 5px 0;color:green;">{$value.uname}</p>
+                <strong>{$value.body}</strong>
+            </div>
+        </li>
+        {/each}
+    </script>
+</section>

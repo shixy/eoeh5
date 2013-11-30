@@ -14,8 +14,10 @@ article{
 }
 .header-secondary{
     background-color: #fff;
-    display: block;
     border-bottom: 1px solid #c2bfbf;
+}
+.header-secondary div.grid{
+    -webkit-box-flex : 1;
 }
 .header-secondary a{
     min-width: 100px;
@@ -50,4 +52,10 @@ article{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.active-bar{
+    color: #3498DB;
+}
+#about_section p{
+    font-size: 1.1em;
 }
