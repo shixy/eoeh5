@@ -1,6 +1,12 @@
 EOE HTML5 Android客户端
 =====
 
+下载地址：
+http://shixy.github.io/Jingle/eoeh5.apk
+![](http://shixy.github.io/Jingle/images/eoe-qr.png)
+
+##应用介绍##
+
 1. 本应用是基于html5+phonegap开发的EOE安卓客户端
 
 2. 功能均是参考 <a href="https://github.com/eoecn/android-app" target="_blank" style="color:#2980B9 ">EOE开源安卓客户端</a>，感谢EOE开源安卓客户端所做的贡献。
