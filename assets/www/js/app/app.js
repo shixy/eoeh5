@@ -86,7 +86,7 @@ App.page('index',function(){
         $('#btn_show_user').on('tap',function(){
             var key = localStorage.getItem('authKey');
             var target = key ? '#user_section' : '#login_section';
-            J.Router.turnTo(target);
+            J.Router.goTo(target);
         });
         //初始化导航栏iScroll
         navScroll = J.Scroll($navContainer,{vScroll:false,hScroll:true,hScrollbar: false});
@@ -123,7 +123,7 @@ App.page('index',function(){
             if(!url)return;
             App.page('detail').url = url;
             App.page('detail').title = $(this).closest('ul.list').data('name');
-            J.Router.turnTo('#detail_section');
+            J.Router.goTo('#detail_section');
         });
         //init
         this.refresh('社区精选',EoeAPI.topURL);
@@ -199,22 +199,24 @@ App.page('index',function(){
 App.page('detail',function(){
     var $container,baseUrl;
     this.init = function(){
-        //$container = $('#detail_article  div.scrollWrapper');
-        $container = $('#detail_iframe');
+        $container = $('#detail_article div.scrollWrapper');
         $('#detail_section footer a').on('tap',function(){
             _bindBar($(this));
+        });
+        $('#detail_section').on('pagehide',function(e,isBack){
+            if(isBack)$container.empty();
         });
     }
     this.load = function(){
         if(!this.url){
             console.error('没有获取数据url');
         }
-        //$container.empty();
-        $container.attr('src','html/detail_frame.html');
         $('#detail_section header .title').text(this.title);
         J.showMask();
         EoeAPI.get(this.url,function(data){
-            $($container[0].contentWindow.document.body).html(data.response.content);
+            var $content = $(data.response.content).filter('div.show');
+            $container.html($content);
+            $container.find('base').remove();
             _renderBar(data.response);
             J.Scroll('#detail_article');
             J.hideMask();
@@ -247,7 +249,7 @@ App.page('detail',function(){
         if(id == 'btn_user_comment'){
             App.page('comment').getUrl = url;
             App.page('comment').submitUrl = bar.data('submit');
-            J.Router.turnTo('#comment_section');
+            J.Router.goTo('#comment_section');
         }else{
             var isActive = bar.hasClass('active-bar');
             var save_t = bar.data('save');
@@ -257,7 +259,7 @@ App.page('detail',function(){
             }
             if(!key){
                 App.page('login').turnBack = true;
-                J.Router.turnTo('#login_section');
+                J.Router.goTo('#login_section');
                 return;
             }
             EoeAPI.getWithSign(url,key,function(){
@@ -297,7 +299,7 @@ App.page('login',function(){
                     if(_this.turnBack){//处理未登录时需要登录处理的后续操作
                         J.Router.back();
                     }else{
-                        J.Router.turnTo('#user_section');
+                        J.Router.goTo('#user_section');
                     }
                 }else{
                     $('#password').val('');
@@ -325,7 +327,7 @@ App.page('login',function(){
                     if(_this.turnBack){//处理未登录时需要登录处理的后续操作
                         J.Router.back();
                     }else{
-                        J.Router.turnTo('#user_section');
+                        J.Router.goTo('#user_section');
                     }
                 }
             });
@@ -340,7 +342,7 @@ App.page('user',function(){
         $('#btn_logout').on('tap',function(){
             localStorage.removeItem('authKey');
             _this.userInfo = null;
-            J.Router.turnTo('#index_section');
+            J.Router.goTo('#index_section');
         });
     }
     this.load = function(){
@@ -370,7 +372,7 @@ App.page('favo',function(){
         $('#favo_section .list').on('tap','li',function(){
             App.page('detail').url = $(this).data('url');
             App.page('detail').title = $(this).closest('ul.list').data('name');
-            J.Router.turnTo('#detail_section');
+            J.Router.goTo('#detail_section');
         });
     }
     this.load = function(){
@@ -395,7 +397,7 @@ App.page('comment',function(){
         });
         $btn_login.on('tap',function(){
             App.page('login').turnBack = true;
-            J.Router.turnTo('#login_section');
+            J.Router.goTo('#login_section');
         });
         $('#btn_submit_comment').on('tap',function(){
             var v = $('#input_comment').val();

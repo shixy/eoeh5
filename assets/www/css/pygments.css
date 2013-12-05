@@ -165,3 +165,6 @@ div.show{
     font-size: 14px !important;
     line-height: 28px;
 }
+.show{margin:0 auto;font:12px/24px '微软雅黑',Arial,Helvetica,sans-serif;; color:#757575;}
+.show h1{font-size:22px;line-height:36px;font-weight:normal;color:#363636;}
+.show h4{font-size:14px;font-weight:normal;line-height:20px;color:#bdbdbd;}
