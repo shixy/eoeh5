@@ -218,7 +218,7 @@ App.page('detail',function(){
             $container.html($content);
             $container.find('base').remove();
             _renderBar(data.response);
-            J.Scroll('#detail_article');
+            J.Scroll('#detail_article',{checkDOMChanges:true});
             J.hideMask();
         });
     }
