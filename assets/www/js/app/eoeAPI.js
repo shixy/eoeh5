@@ -63,12 +63,10 @@ window.EoeAPI = (function(){
     }
     this.getWithSign = function(url,key,success,error){
         var _this = this;
-        url += '&uid=111790&nonce=3277deffc7&timestamp=1385627864322&api_sign=2a6efa2e44756e20dae68b724688f0ba';//web端测试
-        _this.get(url,success);
-//        window.plugins.eoeSign.get(key,function(param){
-//            url += param;
-//            _this.get(url,success,error);
-//        });
+        window.plugins.eoeSign.get(key,function(param){
+            url += param;
+            _this.get(url,success,error);
+        });
     }
 
 
